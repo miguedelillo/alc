@@ -2,14 +2,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-def proyectarPts(T, wz):
+def proyectarPts(T, puntos):
     assert(T.shape == (2,2)) # chequeo de matriz 2x2
-    assert(T.shape[1] == wz.shape[0]) # multiplicacion matricial valida   
-    xy = None
-    ############### Insert code here!! ######################3    
-
-    ############### Insert code here!! ######################3
-    return xy
+    assert(T.shape[1] == puntos.shape[0]) # multiplicacion matricial valida   
+    puntos_transformados = np.zeros(puntos.shape)
+    cant_puntos = puntos.shape[1]
+    ############### Insert code here!! ######################
+    for n_punto in range(cant_puntos):
+        x = puntos[0,n_punto]
+        y = puntos[1,n_punto]
+        nuevo_x,nuevo_y = (T@np.array([x,y]))
+        puntos_transformados[0,n_punto] = nuevo_x
+        puntos_transformados[1,n_punto] = nuevo_y
+    return puntos_transformados
+    ############### Insert code here!! ######################
 
 def pointsGrid(corners):
     # crear 10 lineas horizontales
@@ -44,6 +50,7 @@ def vistform(T, wz, titulo=''):
     fig.suptitle(titulo)
     grid_plot(ax1, wz, limits, 'w', 'z')    
     grid_plot(ax2, xy, limits, 'x', 'y')    
+    plt.show()
     
 def grid_plot(ax, ab, limits, a_label, b_label):
     ax.plot(ab[0,:], ab[1,:], '.')
